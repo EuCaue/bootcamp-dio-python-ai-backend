@@ -22,63 +22,75 @@ def withdraw():
     global withdraw_count
     global extract
     global balance
+    hasError = False
     try:
         amount_to_withdraw = float(input("How much do you want to withdraw? "))
+        if amount_to_withdraw > balance:
+            print(
+                f"You don't have all this money.\nCurrent Balance | {locale.currency(balance, grouping=True)} |"
+            )
+            hasError = True
+        if withdraw_count >= WITHDRAW_LIMIT and not hasError:
+            print(f"MAX WITHDRAW LIMIT REACHED: {WITHDRAW_LIMIT}")
+            hasError = True
+
+        if amount_to_withdraw > limit and not hasError:
+            print(
+                f"The maximum amount to withdraw is {locale.currency(limit, grouping=True)}"
+            )
+            hasError = True
+
+        if amount_to_withdraw <= 0 and not hasError:
+            print("You need to specify a value greater than 0 to withdraw.", end="")
+            hasError = True
+
+        if not hasError:
+            withdraw_count += 1
+            balance -= amount_to_withdraw
+            extract += f"""
+
+            {"-"*50} 
+                DATE: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+                Withdraw value of: {locale.currency(amount_to_withdraw)}
+            {"-"*50} 
+
+            """
+            print(f"Your current balance is now: {locale.currency(balance)}")
+        return True
     except ValueError:
         print("Invalid Number")
         return False
-    if amount_to_withdraw > balance:
-        print(
-            f"You don't have all this money.\nCurrent Balance | {locale.currency(balance, grouping=True)} |"
-        )
-        return False
-    if withdraw_count >= WITHDRAW_LIMIT:
-        print(f"MAX WITHDRAW LIMIT REACHED: {WITHDRAW_LIMIT}")
-        return False
-
-    if amount_to_withdraw > 500:
-        print(
-            f"The maximum amount to withdraw is {locale.currency(limit, grouping=True)}"
-        )
-        return False
-
-    withdraw_count += 1
-    balance -= amount_to_withdraw
-    extract += f"""
-
-    {"-"*50} 
-        DATE: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-        Withdraw value of: {locale.currency(amount_to_withdraw)}
-    {"-"*50} 
-
-    """
-    print(f"Your current balance is now: {locale.currency(balance)}")
-    return True
 
 
 def deposit():
     global balance
     global extract
     _ = locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+    hasError = False
     try:
         amount_to_deposit = float(
             input("How much do you want to deposit in your account? ")
         )
-        if amount_to_deposit > 0:
+        print()
+        if not amount_to_deposit > 0:
+            print("You need to deposit some amount greater than 0.", end="")
+            hasError = True
+
+        if not hasError:
             balance += amount_to_deposit
-        extract += f"""
+            extract += f"""
 
-        {"-"*50} 
-            DATE: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-            Deposit value of: {locale.currency(amount_to_deposit)}
-        {"-"*50} 
+            {"-"*50} 
+                DATE: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+                Deposit value of: {locale.currency(amount_to_deposit)}
+            {"-"*50} 
 
-        """
-        print(
-            f"A deposit of {locale.currency(amount_to_deposit)} amount has been made into the account"
-        )
+            """
+            print(
+                f"A deposit of {locale.currency(amount_to_deposit)} amount has been made into the account."
+            )
 
-        print(f"Your current balance is now: {locale.currency(balance)}")
+            print(f"Your current balance is now: {locale.currency(balance)}")
         return True
     except ValueError:
         print("Invalid Number")
@@ -91,6 +103,7 @@ def print_extract():
     global balance
     if len(extract) <= 0:
         print("You haven't done anything in your account yet.", end="")
+    print("=" * 25, "EXTRACT", "=" * 25)
     print(extract)
     print(f"Current Balance {locale.currency(balance)}")
 
@@ -110,6 +123,7 @@ while True:
         print_extract()
 
     elif input_option.lower() == "q":
+        print("Bye, have a nice day! :)")
         break
 
     else:
