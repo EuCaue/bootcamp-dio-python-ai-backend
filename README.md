@@ -3,3 +3,4 @@
 ## Labs Projects
 
 - [bank-v1](./bank-v1) A Basic banking system.
+- [bank-v2](./bank-v2) A banking system.

@@ -3,3 +3,4 @@
 ## Labs Projects
 
 - [bank-v1](./bank-v1) Um sistema bancário.
+- [bank-v2](./bank-v2) Um sistema bancário avançado.
