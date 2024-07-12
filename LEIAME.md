@@ -7,3 +7,4 @@
 - [bank-oop](./bank-oop) Um sistema bancaria feito com **OOP**.
 - [workout_api](./workout_api/) Uma API feita com FastAPI
 - [store_api](./store_api/) Uma API feita com FastAPI + TDD + Pytest
+- [fake_or_natty](./fake_or_natty/) Experimento com IA generativa
