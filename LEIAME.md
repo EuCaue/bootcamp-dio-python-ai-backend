@@ -5,3 +5,5 @@
 - [bank-v1](./bank-v1) Um sistema bancário.
 - [bank-v2](./bank-v2) Um sistema bancário avançado.
 - [bank-oop](./bank-oop) Um sistema bancaria feito com **OOP**.
+- [workout_api](./workout_api/) Uma API feita com FastAPI
+- [store_api](./store_api/) Uma API feita com FastAPI + TDD + Pytest
